@@ -37,7 +37,7 @@
   "homepage": "https://github.com/albertgmz/BeatDock#readme",
   "engines": {
     "node": ">=22.16.0",
-    "npm": ">=11.4.2"
+    "npm": ">=10.9.2"
   },
   "dependencies": {
     "discord.js": "^14.27.0",
