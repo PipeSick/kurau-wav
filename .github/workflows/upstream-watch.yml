@@ -1,0 +1,149 @@
+name: Upstream Watch
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 6 * * 1'
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: upstream-watch
+  cancel-in-progress: false
+
+env:
+  UPSTREAM_REPO: https://github.com/albertgmz/BeatDock.git
+  BASE_UPSTREAM_TAG: v2.11.1
+
+jobs:
+  check-upstream:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout kurau.wav
+        uses: actions/checkout@v6.0.3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Add upstream remote
+        run: |
+          git remote get-url upstream >/dev/null 2>&1 && git remote set-url upstream "$UPSTREAM_REPO" || git remote add upstream "$UPSTREAM_REPO"
+          git fetch upstream '+refs/tags/*:refs/tags/upstream/*' --prune --force
+
+      - name: Detect latest stable upstream tag
+        id: upstream
+        run: |
+          tag="$(git for-each-ref --format='%(refname:strip=3)' refs/tags/upstream \
+            | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' \
+            | sort -V \
+            | tail -1)"
+          if [ -z "$tag" ]; then
+            echo "No upstream version tag found" >&2
+            exit 1
+          fi
+          if ! git rev-parse --verify --quiet "refs/tags/upstream/$tag^{commit}" >/dev/null; then
+            echo "Detected upstream tag is not a commit: $tag" >&2
+            exit 1
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "tag_ref=refs/tags/upstream/$tag" >> "$GITHUB_OUTPUT"
+          echo "branch=automation/upstream-$tag" >> "$GITHUB_OUTPUT"
+          echo "latest upstream tag: $tag"
+
+      - name: Stop when already current
+        if: steps.upstream.outputs.tag == env.BASE_UPSTREAM_TAG
+        run: echo "Already based on $BASE_UPSTREAM_TAG"
+
+      - name: Prepare candidate branch
+        if: steps.upstream.outputs.tag != env.BASE_UPSTREAM_TAG
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          branch="${{ steps.upstream.outputs.branch }}"
+          git fetch origin "refs/heads/$branch:refs/remotes/origin/$branch" || true
+          if git rev-parse --verify --quiet "origin/$branch" >/dev/null; then
+            git checkout -B "$branch" "origin/$branch"
+          else
+            git checkout -B "$branch"
+          fi
+          git reset --hard "$GITHUB_SHA"
+          set +e
+          git merge --no-commit --no-ff "${{ steps.upstream.outputs.tag_ref }}"
+          status=$?
+          set -e
+          if [ "$status" -ne 0 ]; then
+            git diff --name-only --diff-filter=U > upstream-conflicts.txt
+            git merge --abort || true
+            {
+              echo "# Upstream update failed"
+              echo
+              echo "Target upstream: ${{ steps.upstream.outputs.tag }}"
+              echo "Base upstream: $BASE_UPSTREAM_TAG"
+              echo
+              echo "Conflicting files:"
+              sed 's/^/- /' upstream-conflicts.txt
+            } > upstream-update-report.md
+            echo "conflict=true" >> "$GITHUB_ENV"
+          else
+            if git diff --cached --quiet && git diff --quiet; then
+              echo "No merge changes produced for ${{ steps.upstream.outputs.tag }}"
+            else
+              git commit -m "chore: merge BeatDock ${{ steps.upstream.outputs.tag }} into kurau.wav candidate"
+            fi
+            echo "conflict=false" >> "$GITHUB_ENV"
+          fi
+
+      - name: Install dependencies
+        if: steps.upstream.outputs.tag != env.BASE_UPSTREAM_TAG && env.conflict == 'false'
+        run: npm ci
+
+      - name: Validate candidate
+        if: steps.upstream.outputs.tag != env.BASE_UPSTREAM_TAG && env.conflict == 'false'
+        run: |
+          npm run validate
+          npm test
+          docker build -t kurau-wav:${{ steps.upstream.outputs.tag }}-candidate .
+
+      - name: Push candidate branch
+        if: steps.upstream.outputs.tag != env.BASE_UPSTREAM_TAG && env.conflict == 'false'
+        run: |
+          git push --force-with-lease origin "${{ steps.upstream.outputs.branch }}"
+
+      - name: Create candidate PR
+        if: steps.upstream.outputs.tag != env.BASE_UPSTREAM_TAG && env.conflict == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          existing="$(gh pr list --head "${{ steps.upstream.outputs.branch }}" --base main --state open --json number --jq '.[0].number')"
+          if [ -n "$existing" ]; then
+            gh pr comment "$existing" --body "Upstream watch re-ran for ${{ steps.upstream.outputs.tag }}. Candidate branch was refreshed and validation completed."
+          else
+            gh pr create \
+              --title "chore: update BeatDock base to ${{ steps.upstream.outputs.tag }}" \
+              --body "Automated upstream candidate. Validation ran in this workflow, but this PR still requires human review before any image is promoted." \
+              --base main \
+              --head "${{ steps.upstream.outputs.branch }}"
+          fi
+
+      - name: Create conflict issue
+        if: steps.upstream.outputs.tag != env.BASE_UPSTREAM_TAG && env.conflict == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          title="Upstream update requires manual review: ${{ steps.upstream.outputs.tag }}"
+          existing="$(gh issue list --state open --search "$title in:title" --json number --jq '.[0].number')"
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body-file upstream-update-report.md
+          else
+            gh issue create --title "$title" --body-file upstream-update-report.md
+          fi
+          exit 1
