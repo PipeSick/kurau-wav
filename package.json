@@ -1,0 +1,48 @@
+{
+  "name": "kurau-wav",
+  "version": "2.11.1-kurau.6",
+  "description": "kurau.wav, the PipeSick branded distribution of BeatDock v2.11.1.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node scripts/test-branding.js && node scripts/test-presence.js && node scripts/test-context-events.js && node scripts/test-skip-flow.js && node scripts/test-pelican-startup.js && node scripts/test-env-priority.js && node scripts/test-commands.js && node scripts/test-upstream-policy.js && node scripts/test-autoplay.js && node scripts/test-resilience.js",
+    "test:branding": "node scripts/test-branding.js",
+    "validate": "node scripts/validate-kurau.js && node scripts/validate-egg.js",
+    "docker:build": "docker build -t kurau-wav:v2.11.1-kurau.6 .",
+    "test:wings-overlay": "sh scripts/test-wings-overlay.sh"
+  },
+  "keywords": [
+    "discord",
+    "discord-bot",
+    "music",
+    "music-bot",
+    "bot",
+    "kurau.wav",
+    "pipesick",
+    "lavalink",
+    "youtube",
+    "spotify",
+    "docker",
+    "nodejs"
+  ],
+  "author": "Lázaro <lazaro98@duck.com>; PipeSick kurau.wav distribution",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/albertgmz/BeatDock.git"
+  },
+  "bugs": {
+    "url": "https://github.com/albertgmz/BeatDock/issues"
+  },
+  "homepage": "https://github.com/albertgmz/BeatDock#readme",
+  "engines": {
+    "node": ">=22.16.0",
+    "npm": ">=11.4.2"
+  },
+  "dependencies": {
+    "discord.js": "^14.27.0",
+    "dotenv": "^17.4.2",
+    "lavalink-client": "^2.11.0",
+    "picocolors": "^1.1.1"
+  }
+}

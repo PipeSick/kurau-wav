@@ -1,0 +1,31 @@
+{
+  "displayName": "kurau.wav",
+  "japaneseName": "クラウ",
+  "role": "DJ virtual de PipeSick",
+  "color": "#B45CFF",
+  "footer": "kurau.wav - PipeSick",
+  "attribution": "Basada en BeatDock v2.11.1. Licencia Apache-2.0.",
+  "links": {
+    "upstream": "https://github.com/albertgmz/BeatDock",
+    "upstreamIssues": "https://github.com/albertgmz/BeatDock/issues"
+  },
+  "commandDescriptions": {
+    "about": "Muestra informacion de kurau.wav y la base BeatDock.",
+    "autoplay": "Activa o desactiva la seleccion automatica de temas relacionados.",
+    "back": "Vuelve a la pista anterior.",
+    "clear": "Limpia la cola actual.",
+    "filter": "Aplica efectos y presets de audio.",
+    "invite": "Obtiene un enlace para invitar a kurau.wav.",
+    "loop": "Alterna el bucle de pista o cola.",
+    "lyrics": "Muestra la letra de la pista actual.",
+    "nowplaying": "Muestra lo que esta sonando ahora.",
+    "pause": "Pausa o reanuda la reproduccion.",
+    "play": "Reproduce musica desde una busqueda o URL.",
+    "queue": "Muestra la cola de reproduccion.",
+    "search": "Busca musica y permite elegir resultados.",
+    "shuffle": "Mezcla la cola.",
+    "skip": "Salta la pista actual.",
+    "stop": "Detiene la reproduccion y limpia la cola.",
+    "volume": "Ajusta el volumen de reproduccion."
+  }
+}

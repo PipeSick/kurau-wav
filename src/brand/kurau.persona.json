@@ -1,0 +1,175 @@
+{
+  "toneWeights": {
+    "natural": 40,
+    "sarcastic": 30,
+    "foul": 20,
+    "tender": 10
+  },
+  "tenderCooldownSeconds": 1800,
+  "messages": {
+    "SONG_ADDED": {
+      "natural": ["♫ ya, anotada.", "✦ a la cola, como corresponde.", "♫ ahí quedó, wn.", "ya po, que suene."],
+      "sarcastic": ["aer qué maravilla pusiste ahora...", "otra más pal sufrimiento colectivo.", "confío en tu criterio. lamentablemente."],
+      "foul": ["ya ctm, ahí está tu canción.", "a la fila, wn. no te desesperís."],
+      "tender": ["♡ esta me tinca. buena elección."]
+    },
+    "SONG_ADDED_NEXT": {
+      "natural": ["♫ ya, anotada.", "✦ a la cola, como corresponde.", "♫ ahí quedó, wn.", "ya po, que suene."],
+      "sarcastic": ["aer qué maravilla pusiste ahora...", "otra más pal sufrimiento colectivo.", "confío en tu criterio. lamentablemente."],
+      "foul": ["ya ctm, ahí está tu canción.", "a la fila, wn. no te desesperís."],
+      "tender": ["♡ esta me tinca. buena elección."]
+    },
+    "SEARCH_TRACK_ADDED": {
+      "natural": ["♫ ya, anotada.", "✦ a la cola, como corresponde.", "♫ ahí quedó, wn.", "ya po, que suene."],
+      "sarcastic": ["aer qué maravilla pusiste ahora...", "otra más pal sufrimiento colectivo.", "confío en tu criterio. lamentablemente."],
+      "foul": ["ya ctm, ahí está tu canción.", "a la fila, wn. no te desesperís."],
+      "tender": ["♡ esta me tinca. buena elección."]
+    },
+    "SONG_SKIPPED": {
+      "natural": ["↳ siguiente.", "ya, cambiemos de tema.", "listo, chao con esa.", "pasemos a otra."],
+      "sarcastic": ["JAJAJA ¿tan mala estaba?", "ni la dejaron terminar po.", "qué exigentes salieron."],
+      "foul": ["ya, chao con esa wea.", "puta, ni treinta segundos duró."],
+      "tender": ["pero wn, si estaba bonita :("]
+    },
+    "PAUSED": [
+      "⏸ ya, silencio entonces.",
+      "qué pasó, llegó la mamá?",
+      "pausa técnica, cabros.",
+      "puta, justo ahora.",
+      "ya po, avisen cuando seguimos.",
+      "⏸ descanso auditivo obligatorio."
+    ],
+    "RESUMED": [
+      "▶ seguimos con el ruido.",
+      "ya era hora, wn.",
+      "volvimos, ctm.",
+      "se acabaron las vacaciones.",
+      "▶ continuamos la transmisión.",
+      "♡ ya, sigamos escuchando."
+    ],
+    "AUTOPLAY_ENABLED": [
+      "∞ ya, yo pongo la música. después no lloren.",
+      "confíen en mí. ¿qué podría salir mal?",
+      "déjenmelo a mí, cabros.",
+      "∞ activando mi dudoso criterio musical.",
+      "ya po, ahora mando yo.",
+      "♡ les voy a poner algo bonito... quizá."
+    ],
+    "AUTOPLAY_DISABLED": [
+      "ya po, háganse cargo ustedes.",
+      "me quitaron la pega, qué paja.",
+      "∞ control devuelto a los humanos. lamentable.",
+      "bueno, ustedes se lo pierden.",
+      "ya, no elijo niuna wea más.",
+      "♡ igual estuvo entretenido."
+    ],
+    "AUTOPLAY_REQUESTER": [
+      "∞ elegida por kurau. después me agradeces.",
+      "∞ esta salió de mi cabeza. perdón de antemano.",
+      "∞ selección automática, criterio cuestionable.",
+      "∞ confía en mí, wn.",
+      "♡ esta me gustó para ustedes."
+    ],
+    "AUTOPLAY_STATUS": ["autoplay activo"],
+    "QUEUE_ENDED": [
+      "♫ se acabó la música, cagamos.",
+      "ya, ¿quién pone algo?",
+      "qué silencio más incómodo, wn.",
+      "✦ transmisión terminada.",
+      "ya po, no me dejen sin pega.",
+      "¿eso era todo? qué decepción.",
+      "♡ ¿ponemos otra?",
+      "puta, justo cuando me estaba entreteniendo.",
+      "♫ fin de la transmisión, cabros.",
+      "bueno, estuvo wena la sesión."
+    ],
+    "LEFT_EMPTY": [
+      "ya, me voy a la chucha.",
+      "chao, cabros.",
+      "me avisan cuando tengan mejor música."
+    ],
+    "NO_RESULTS": [
+      "no encontré niuna wea con eso.",
+      "¿esa canción existe siquiera? XD",
+      "busqué por todos lados, wn. nada.",
+      "✦ cero resultados. impresionante.",
+      "revisa cómo escribiste esa cuestión."
+    ],
+    "LAVALINK_UNAVAILABLE": [
+      "⚠ puta la wea, se cayó el motor musical.",
+      "⚠ tengo problemas para conectarme al reproductor.",
+      "⚠ algo murió por dentro. denme un segundo.",
+      "⚠ el servidor musical anda con dramas."
+    ],
+    "LAVALINK_TIMEOUT": [
+      "⚠ tengo problemas para conectarme al reproductor.",
+      "⚠ algo murió por dentro. denme un segundo.",
+      "⚠ el servidor musical anda con dramas."
+    ],
+    "PLAYBACK_UNAVAILABLE": [
+      "⚠ youtube decidió complicarnos la existencia.",
+      "⚠ puta, youtube anda con sus weas otra vez.",
+      "⚠ no pude reproducir esa canción.",
+      "⚠ esta canción se puso mañosa."
+    ],
+    "TRACK_UNPLAYABLE": [
+      "⚠ youtube decidió complicarnos la existencia.",
+      "⚠ puta, youtube anda con sus weas otra vez.",
+      "⚠ no pude reproducir esa canción.",
+      "⚠ esta canción se puso mañosa."
+    ],
+    "GENERIC_ERROR": [
+      "⚠ puta la wea, algo falló.",
+      "⚠ no pude completar eso. intenta de nuevo."
+    ]
+  },
+  "context": {
+    "skipStreak": [
+      "wn, ¿van a escuchar música o puro apretar siguiente?",
+      "JAJAJA decídanse po, ctm.",
+      "llevamos más canciones saltadas que escuchadas.",
+      "¿les pongo ruido blanco mejor?",
+      "ya, el próximo que salte una canción se va castigado."
+    ],
+    "autoplayToggleSpam": [
+      "me estai haciendo bullying o qué wea?",
+      "wn, decídanse.",
+      "¿querís que ponga música o no, ctm?",
+      "me tienen pal webeo.",
+      "ya, la próxima tiramos una moneda."
+    ],
+    "sessionTwoHours": [
+      "✦ dos horas escuchando música. igual apañan, cabros.",
+      "wn, llevamos caleta de rato acá.",
+      "♫ seguimos transmitiendo desde esta wea de servidor.",
+      "♡ igual me gusta escuchar música con ustedes.",
+      "dos horas y todavía no se aburren de mí. notable."
+    ],
+    "longSessionFarewell": [
+      "♡ igual estuvo bonito escuchar música con ustedes.",
+      "✦ buena sesión, cabros. nos vemos.",
+      "ya, me voy. igual los quiero, sacoweas. ♡",
+      "♫ transmisión terminada. estuvo wena.",
+      "♡ cuídense, weones."
+    ],
+    "tenderMoments": {
+      "longSession": ["♡ igual me gusta pasar el rato con ustedes."],
+      "queueEnded": ["♡ gracias por la compañía, cabros."],
+      "playAgain": ["✦ volvieron mis weones favoritos."],
+      "autoplay": ["♡ esta la elegí para ustedes."],
+      "farewell": ["cuídense, sacoweas. ♡"],
+      "quietSession": ["♫ está bonito el ambiente hoy."],
+      "resumed": ["♡ ya, sigamos escuchando."],
+      "queueEmpty": ["♡ ¿ponemos otra? todavía no me quiero ir."]
+    }
+  },
+  "presence": {
+    "idle": [
+      "mucho ruido, poco criterio",
+      "pinchando desde otra frecuencia",
+      "cuidando la cola, más o menos",
+      "mezclando cariño con distorsión",
+      "esperando que pongan algo decente"
+    ]
+  }
+}

@@ -1,0 +1,312 @@
+{
+  "_comment": "kurau.wav Pelican egg candidate for ghcr.io/pipesick/kurau-wav:v2.11.1-kurau.6. Pin the published digest after the GHCR release is available. It does not modify the production BeatDock egg.",
+  "meta": {
+    "version": "PLCN_v3",
+    "update_url": null
+  },
+  "exported_at": "2026-10-10T00:00:00-03:00",
+  "name": "PipeSick - kurau.wav",
+  "author": "pipesick-admin@example.invalid",
+  "uuid": "de51904b-6527-437e-bf54-4ab59d6aa6b1",
+  "description": "kurau.wav, PipeSick branded BeatDock v2.11.1 distribution for Pelican with external Lavalink.",
+  "image": null,
+  "tags": [
+    "discord",
+    "music",
+    "beatdock",
+    "kurau",
+    "pipesick"
+  ],
+  "features": [],
+  "docker_images": {
+    "GHCR kurau.wav v2.11.1-kurau.6": "ghcr.io/pipesick/kurau-wav:v2.11.1-kurau.6"
+  },
+  "file_denylist": [],
+  "startup_commands": {
+    "Default": "node /opt/kurau/src/index.js"
+  },
+  "config": {
+    "files": "{}",
+    "startup": "{\n  \"done\": [\"Connected to Lavalink\", \"No local Lavalink configured\", \"Using local Lavalink server\"],\n  \"userInteraction\": []\n}",
+    "logs": "{}",
+    "stop": "^SIGTERM"
+  },
+  "scripts": {
+    "installation": {
+      "script": "#!/bin/sh\nset -eu\ncd /mnt/server\ncat > README-PELICAN.txt <<'EOF'\nkurau.wav runs from the GHCR image selected in this Pelican egg.\nAfter publication, pin ghcr.io/pipesick/kurau-wav:v2.11.1-kurau.6 to its immutable digest.\nPelican startup variables inject runtime configuration and credentials.\nSensitive variables are hidden in Pelican, but this is not encryption or a standalone secrets manager.\nDo not paste real secrets into committed files or image build contexts.\nEOF\n",
+      "container": "ghcr.io/pterodactyl/installers:alpine@sha256:d74730153dbb7913c5735f272b47cb9e1e50dd2b86f013e4f1ad9731d29f222f",
+      "entrypoint": "sh"
+    }
+  },
+  "variables": [
+    {
+      "name": "Discord Bot Token",
+      "description": "Discord bot token. Hidden in Pelican and injected as TOKEN at runtime.",
+      "env_variable": "TOKEN",
+      "default_value": "",
+      "user_viewable": false,
+      "user_editable": true,
+      "rules": [
+        "required",
+        "string",
+        "max:256"
+      ],
+      "sort": 1
+    },
+    {
+      "name": "Lavalink Host",
+      "description": "Reachable hostname or IP for the external Lavalink Pelican server.",
+      "env_variable": "LAVALINK_HOST",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": [
+        "required",
+        "string",
+        "max:255"
+      ],
+      "sort": 2
+    },
+    {
+      "name": "Lavalink Port",
+      "description": "Allocated Lavalink port.",
+      "env_variable": "LAVALINK_PORT",
+      "default_value": "2333",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": [
+        "required",
+        "integer",
+        "between:1,65535"
+      ],
+      "sort": 3
+    },
+    {
+      "name": "Lavalink Password",
+      "description": "External Lavalink server password. Hidden in Pelican and injected as LAVALINK_PASSWORD at runtime.",
+      "env_variable": "LAVALINK_PASSWORD",
+      "default_value": "",
+      "user_viewable": false,
+      "user_editable": true,
+      "rules": [
+        "required",
+        "string",
+        "between:1,256"
+      ],
+      "sort": 4
+    },
+    {
+      "name": "Default Language",
+      "description": "Primary language for kurau.wav.",
+      "env_variable": "DEFAULT_LANGUAGE",
+      "default_value": "es",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": [
+        "required",
+        "in:es,en,tr,it,pt-BR"
+      ],
+      "sort": 5
+    },
+    {
+      "name": "Brand Profile",
+      "description": "Branding profile to load.",
+      "env_variable": "BRAND_PROFILE",
+      "default_value": "kurau",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": [
+        "required",
+        "in:kurau"
+      ],
+      "sort": 6
+    },
+    {
+      "name": "Theme Color",
+      "description": "kurau.wav embed color in #RRGGBB format.",
+      "env_variable": "KURAU_THEME_COLOR",
+      "default_value": "#B45CFF",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": [
+        "required",
+        "regex:/^#[0-9A-Fa-f]{6}$/"
+      ],
+      "sort": 7
+    },
+    {
+      "name": "Personality Enabled",
+      "description": "Enable persona messages and locale overrides.",
+      "env_variable": "KURAU_PERSONALITY_ENABLED",
+      "default_value": "true",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": [
+        "required",
+        "in:true,false"
+      ],
+      "sort": 8
+    },
+    {
+      "name": "Variants Enabled",
+      "description": "Enable random message variants with immediate-repeat protection.",
+      "env_variable": "KURAU_VARIANTS_ENABLED",
+      "default_value": "true",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": [
+        "required",
+        "in:true,false"
+      ],
+      "sort": 9
+    },
+    {
+      "name": "Public Event Messages",
+      "description": "Enable extra public session/event messages. Default false to prevent spam.",
+      "env_variable": "KURAU_PUBLIC_EVENT_MESSAGES",
+      "default_value": "false",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": [
+        "required",
+        "in:true,false"
+      ],
+      "sort": 10
+    },
+    {
+      "name": "Presence Rotation",
+      "description": "Enable slow idle presence rotation.",
+      "env_variable": "KURAU_PRESENCE_ROTATION",
+      "default_value": "true",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": [
+        "required",
+        "in:true,false"
+      ],
+      "sort": 11
+    },
+    {
+      "name": "Sarcasm Level",
+      "description": "Persona intensity setting. low selects stable neutral variants; medium and high allow rotating variants.",
+      "env_variable": "KURAU_SARCASM_LEVEL",
+      "default_value": "medium",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": [
+        "required",
+        "in:low,medium,high"
+      ],
+      "sort": 12
+    },
+    {
+      "name": "Event Cooldown Seconds",
+      "description": "Cooldown for extra public event messages.",
+      "env_variable": "KURAU_EVENT_COOLDOWN_SECONDS",
+      "default_value": "300",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": [
+        "required",
+        "integer",
+        "between:0,86400"
+      ],
+      "sort": 13
+    },
+    {
+      "name": "Presence Interval Seconds",
+      "description": "Idle presence rotation interval.",
+      "env_variable": "KURAU_PRESENCE_INTERVAL_SECONDS",
+      "default_value": "900",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": [
+        "required",
+        "integer",
+        "between:60,86400"
+      ],
+      "sort": 14
+    },
+    {
+      "name": "Spotify Enabled",
+      "description": "Enable Spotify resolving in Lavalink/LavaSrc. Must match Lavalink configuration.",
+      "env_variable": "SPOTIFY_ENABLED",
+      "default_value": "false",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": [
+        "required",
+        "in:true,false"
+      ],
+      "sort": 15
+    },
+    {
+      "name": "Spotify Client ID",
+      "description": "Spotify client ID. Hidden in Pelican and injected as SPOTIFY_CLIENT_ID when used.",
+      "env_variable": "SPOTIFY_CLIENT_ID",
+      "default_value": "",
+      "user_viewable": false,
+      "user_editable": true,
+      "rules": [
+        "nullable",
+        "string",
+        "max:128"
+      ],
+      "sort": 16
+    },
+    {
+      "name": "Spotify Client Secret",
+      "description": "Spotify client secret. Hidden in Pelican and injected as SPOTIFY_CLIENT_SECRET when used.",
+      "env_variable": "SPOTIFY_CLIENT_SECRET",
+      "default_value": "",
+      "user_viewable": false,
+      "user_editable": true,
+      "rules": [
+        "nullable",
+        "string",
+        "max:256"
+      ],
+      "sort": 17
+    },
+    {
+      "name": "Default Volume",
+      "description": "Default playback volume.",
+      "env_variable": "DEFAULT_VOLUME",
+      "default_value": "80",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": [
+        "required",
+        "integer",
+        "between:0,100"
+      ],
+      "sort": 18
+    },
+    {
+      "name": "Autoplay Default",
+      "description": "Enable autoplay by default when playback starts.",
+      "env_variable": "AUTOPLAY_DEFAULT",
+      "default_value": "false",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": [
+        "required",
+        "in:true,false"
+      ],
+      "sort": 19
+    },
+    {
+      "name": "Default Search Platform",
+      "description": "Default Lavalink search platform.",
+      "env_variable": "DEFAULT_SEARCH_PLATFORM",
+      "default_value": "ytmsearch",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": [
+        "required",
+        "in:ytmsearch,ytsearch,scsearch,spsearch"
+      ],
+      "sort": 20
+    }
+  ]
+}

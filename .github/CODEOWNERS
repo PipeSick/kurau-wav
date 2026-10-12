@@ -1,0 +1,8 @@
+# Set @albertgmz as the default owner for everything
+* @albertgmz
+
+# Dependency files
+package*.json @albertgmz
+Dockerfile @albertgmz
+docker-compose.yml @albertgmz
+.github/ @albertgmz

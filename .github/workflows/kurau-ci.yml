@@ -1,0 +1,43 @@
+name: kurau.wav CI
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kurau-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check JavaScript syntax
+        run: find src scripts -name '*.js' -exec node --check {} +
+
+      - name: Validate configs and egg
+        run: npm run validate
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build Docker image candidate
+        run: docker build -t kurau-wav:ci-${{ github.sha }} .
